@@ -36,6 +36,10 @@ S = 20
 S2 = 5
 UDOffset = 150
 
+# battery update frequency
+global FR,batt
+FR = 50
+batt = ".."
 # this is just the bound box sizes that openCV spits out *shrug*
 faceSizes = [1026, 684, 456, 304, 202, 136, 90]
 
@@ -347,7 +351,7 @@ class FrontEnd(object):
                 dCol = (255,255,255)
             else:
                
-                show = "AI: {} POWER: {}".format(str(tDistance),self.battery())
+                show = "AI: {} POWER: {} UPDATE {}".format(str(tDistance),self.battery(),str(FR))
                 
 
             # Draw the distance choosen
@@ -367,7 +371,12 @@ class FrontEnd(object):
 
 
     def battery(self):
-        batt = self.tello.get_battery()
+        global FR
+        global batt
+        FR -= 1
+        if FR == 0:
+            batt = self.tello.get_battery()
+            FR = 50
         if isinstance(batt,str):
             return batt[:2]
         else:
