@@ -346,7 +346,9 @@ class FrontEnd(object):
                 show = "OVERRIDE: {}".format(oSpeed)
                 dCol = (255,255,255)
             else:
-                show = "AI: {} POWER:{}".format(str(tDistance),str(battery())
+               
+                show = "AI: {} POWER: {}".format(str(tDistance),self.battery())
+                
 
             # Draw the distance choosen
             cv2.putText(frameRet,show,(32,664),cv2.FONT_HERSHEY_SIMPLEX,1,dCol,2)
@@ -365,7 +367,12 @@ class FrontEnd(object):
 
 
     def battery(self):
-        return self.tello.get_battery()[:2]
+        batt = self.tello.get_battery()
+        if isinstance(batt,str):
+            return batt[:2]
+        else:
+            return "wait..."
+        
 
     def update(self):
         """ Update routine. Send velocities to Tello."""
