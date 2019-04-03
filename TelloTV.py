@@ -346,7 +346,7 @@ class FrontEnd(object):
                 show = "OVERRIDE: {}".format(oSpeed)
                 dCol = (255,255,255)
             else:
-                show = "AI: {}".format(str(tDistance))
+                show = "AI: {} POWER:{}".format(str(tDistance),str(battery())
 
             # Draw the distance choosen
             cv2.putText(frameRet,show,(32,664),cv2.FONT_HERSHEY_SIMPLEX,1,dCol,2)
